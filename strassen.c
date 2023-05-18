@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
-#define MAX 300
+ 
+//매트릭스 크기 설정
+#define MAX 1000
 
 int** create_matrix(int);
 int** create_matrix_zero(int n);
