@@ -14,23 +14,23 @@ void combine(int**, int**, int, int, int);
 
 
 int main() {
-	//ÁöÁ¤µÈ Å©±âÀÇ ¸ÅÆ®¸¯½º »ı¼º
+	//ì§€ì •ëœ í¬ê¸°ì˜ ë§¤íŠ¸ë¦­ìŠ¤ ìƒì„±
 	int n = MAX;
 	int** matrixA = create_matrix(MAX);
 	int** matrixB = create_matrix(MAX);
 
 	time_t start = time(NULL);
 
-	//Çà·Ä °ö¼À
+	//í–‰ë ¬ ê³±ì…ˆ
 	int** strassensRes = strassen(matrixA, matrixB, n);
 
 	time_t end = time(NULL);
-	printf("¼Ò¿ä ½Ã°£ : %lf\n", (double)(end - start));
+	printf("ì†Œìš” ì‹œê°„ : %lf\n", (double)(end - start));
 
 	return 0;
 }
 
-//·£´ıÇÑ °ªÀ» °¡Áö´Â ¸ÅÆ®¸¯½º »ı¼º
+//ëœë¤í•œ ê°’ì„ ê°€ì§€ëŠ” ë§¤íŠ¸ë¦­ìŠ¤ ìƒì„±
 int** create_matrix(int n) {
 	srand(time(NULL));
 
@@ -46,7 +46,7 @@ int** create_matrix(int n) {
 	return array;
 }
 
-//0À¸·Î ÃÊ±âÈ­µÈ ¸ÅÆ®¸¯½º »ı¼º
+//0ìœ¼ë¡œ ì´ˆê¸°í™”ëœ ë§¤íŠ¸ë¦­ìŠ¤ ìƒì„±
 int** create_matrix_zero(int n) {
 	int** array = (int**)malloc(n * sizeof(int*));
 
@@ -60,12 +60,12 @@ int** create_matrix_zero(int n) {
 	return array;
 }
 
-//½´Æ®¶ó¼¾ ¾Ë°í¸®Áò
+//ìŠˆíŠ¸ë¼ì„¼ ì•Œê³ ë¦¬ì¦˜
 int** strassen(int** matrixA, int** matrixB, int n) {
 	int** result = create_matrix_zero(n);
 
 	if (n > 1) {
-		//¸ÅÆ®¸¯½º ºĞÇÒ
+		//ë§¤íŠ¸ë¦­ìŠ¤ ë¶„í• 
 		int** a11 = divide(matrixA, n, 0, 0);
 		int** a12 = divide(matrixA, n, 0, (n / 2));
 		int** a21 = divide(matrixA, n, (n / 2), 0);
@@ -75,7 +75,7 @@ int** strassen(int** matrixA, int** matrixB, int n) {
 		int** b21 = divide(matrixB, n, n / 2, 0);
 		int** b22 = divide(matrixB, n, n / 2, n / 2);
 
-		//½´Æ®¶ó¼¾ ºĞÇÒ Á¤º¹
+		//ìŠˆíŠ¸ë¼ì„¼ ë¶„í•  ì •ë³µ
 		int** m1 = strassen(add(a11, a22, n / 2), add(b11, b22, n / 2), n / 2);
 		int** m2 = strassen(add(a21, a22, n / 2), b11, n / 2);
 		int** m3 = strassen(a11, sub(b12, b22, n / 2), n / 2);
@@ -84,13 +84,13 @@ int** strassen(int** matrixA, int** matrixB, int n) {
 		int** m6 = strassen(sub(a21, a11, n / 2), add(b11, b12, n / 2), n / 2);
 		int** m7 = strassen(sub(a12, a22, n / 2), add(b21, b22, n / 2), n / 2);
 
-		//½´Æ®¶ó¼¾ °è»ê
+		//ìŠˆíŠ¸ë¼ì„¼ ê³„ì‚°
 		int** c11 = add(sub(add(m1, m4, n / 2), m5, n / 2), m7, n / 2);
 		int** c12 = add(m3, m5, n / 2);
 		int** c21 = add(m2, m4, n / 2);
 		int** c22 = add(sub(add(m1, m3, n / 2), m2, n / 2), m6, n / 2);
 		
-		//°á°ú »ı¼º
+		//ê²°ê³¼ ìƒì„±
 		combine(c11, result, n / 2, 0, 0);
 		combine(c12, result, n / 2, 0, n / 2);
 		combine(c21, result, n / 2, n / 2, 0);
@@ -102,7 +102,7 @@ int** strassen(int** matrixA, int** matrixB, int n) {
 	return result;
 }
 
-//¸ÅÆ®¸¯½º µ¡¼À
+//ë§¤íŠ¸ë¦­ìŠ¤ ë§ì…ˆ
 int** add(int** matrixA, int** matrixB, int n) {
 	int** result = create_matrix_zero(n);
 
@@ -113,7 +113,7 @@ int** add(int** matrixA, int** matrixB, int n) {
 	return result;
 }
 
-//¸ÅÆ®¸¯½º »¬¼À
+//ë§¤íŠ¸ë¦­ìŠ¤ ëº„ì…ˆ
 int** sub(int** matrixA, int** matrixB, int n) {
 	int** result = create_matrix_zero(n);
 
@@ -124,7 +124,7 @@ int** sub(int** matrixA, int** matrixB, int n) {
 	return result;
 }
 
-//¸ÅÆ®¸¯½º ºĞÇÒ
+//ë§¤íŠ¸ë¦­ìŠ¤ ë¶„í• 
 int** divide(int** matrix, int n, int row, int col) {
 	int div_n = n / 2;
 	int r = row, c = col;
@@ -142,7 +142,7 @@ int** divide(int** matrix, int n, int row, int col) {
 	return array;
 }
 
-//°á°ú ¸ÅÆ®¸¯½º »ı¼º
+//ê²°ê³¼ ë§¤íŠ¸ë¦­ìŠ¤ ìƒì„±
 void combine(int** matrix, int** result, int n, int row, int col) {
 	int r = row, c = col;
 	for (int i = 0; i < n; i++) {
